@@ -1,30 +1,48 @@
 import java.util.*;
 
 public class Main{
-    static void main(String[] args){
+    public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Iskash li da dobavish zhivotno?");
-        String addAnimal = scanner.nextLine();
         ArrayList<Animal> ZooAnimals = new ArrayList<Animal>();
-        if (addAnimal.equals("Y") ||addAnimal.toLowerCase().equals("yes")) {
-            System.out.println("What type of animal would you like to add? ");
+        System.out.println("Iskash li da zapochnesh deistivie?");
+        String entrySystem = scanner.nextLine();
+
+        while(entrySystem.equalsIgnoreCase("yes")) {
+            System.out.print("Iskash li da dobavish zhivotno? ");
+            String addAnimal = scanner.nextLine();
+
+            if (!(addAnimal.equalsIgnoreCase("Y") || addAnimal.equalsIgnoreCase("yes"))) {
+                break;
+            }
+
+            System.out.print("What type of animal would you like to add? ");
             String animalType = scanner.nextLine();
-            System.out.println("What gender is the animal? ");
+
+            System.out.print("What gender is the animal? ");
             String animalGender = scanner.nextLine();
-            Boolean animalIsMale;
+
+            while (!animalGender.equalsIgnoreCase("male")
+                    && !animalGender.equalsIgnoreCase("female")
+                    && !animalGender.equalsIgnoreCase("man")){
+                System.out.print("Invalid gender. Please try again.");
+                System.out.print("What gender is the animal? ");
+                animalGender = scanner.nextLine();
+            }
+
+            boolean animalIsMale;
             if (animalGender.equalsIgnoreCase("male") || animalGender.equalsIgnoreCase("man")) {
                 animalIsMale = true;
-            }
-            else{
+            } else {
                 animalIsMale = false;
             }
-            System.out.println("How old is your animal? ");
+
+            System.out.print("How old is your animal? ");
             int animalAge = scanner.nextInt();
             scanner.nextLine();
-            System.out.println("What's the name of your animal? ");
+            System.out.print("What's the name of your animal? ");
             String animalName = scanner.nextLine();
-            switch(animalType.toLowerCase()){
-                //dog,cat,
+
+            switch (animalType.toLowerCase()) {
                 case "dog":
                     Dog d = new Dog(animalAge, animalName, animalIsMale);
                     ZooAnimals.add(d);
@@ -33,49 +51,31 @@ public class Main{
                     Cat c = new Cat(animalAge, animalName, animalIsMale);
                     ZooAnimals.add(c);
                     break;
+                case "dolphin":
+                    Dolphin dol = new Dolphin(animalAge, animalName, animalIsMale);
+                    ZooAnimals.add(dol);
+                    break;
+                default:
+                    System.out.println("Unknown animal type");
+            }
+
+            System.out.println("Iskash li da povtorish deistivie?");
+            String QuitLoop = scanner.nextLine();
+
+            if (QuitLoop.equalsIgnoreCase("no")) {
+                break;
             }
         }
-       /* Dog d = new Dog(4, "Kucho", true);
-        //d.Zvuk();
-        Cat c = new Cat(3, "Kot", false);
-        //c.Zvuk();
-        Giraffe g = new Giraffe(10, "Dulga Gusha", true);
-        //g.Zvuk();
-        Lion l = new Lion(8, "Simba", false);
-        //l.Zvuk();
-        Elephant e = new Elephant(20, "el elephanto", true);
-        Fox f = new Fox(3, "Stinker", true);
-        JellyFish j = new JellyFish(4, "Stinger", false);
-        Dolphin dolphin = new Dolphin(6, "Waterbud", true);  */
-         //System.out.println("true = ismale");
-        /*
-        ZooAnimals.add(d);
-        ZooAnimals.add(c);
-        ZooAnimals.add(l);
-        ZooAnimals.add(g);
-        ZooAnimals.add(e);
-        ZooAnimals.add(f);
-        ZooAnimals.add(dolphin);
-        ZooAnimals.add(j); */
+
         for (int i = 0; i < ZooAnimals.size(); i++) {
             Animal a = ZooAnimals.get(i);
             a.AnimalPrint();
             a.Sound();
-            //       a.getInterfaces();
-            //   List<Class<?>> interfaces = Arrays.asList(a.getClass().getInterfaces());
-            //a.getClass();
-            List<Class<?>> interfaces = Arrays.asList(a.getClass().getInterfaces());
-            //for(int z = 0; z < interfaces.length; z++ ){
-            //  System.out.println(interfaces[z]);
-            if (interfaces.contains(Aquatic.class)) {;
+            if (a instanceof Aquatic) {
                 ((Aquatic) a).AquaticPrint();
             }
-
         }
+        scanner.close();
+
     }
 }
-
-//ArrayList
-//public class Main {
-//  int x = 5;
-//}
